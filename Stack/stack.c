@@ -45,9 +45,3 @@ int stack_pop(struct Stack* S) {
 	return element;
 }
 
-
-
-int main(int argc , char* argv[]) {
-
-	return 0;	
-}
