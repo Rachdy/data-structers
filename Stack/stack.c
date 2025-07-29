@@ -2,18 +2,15 @@
 #include"stdlib.h"
 #include"Header.h"
 #include"stdbool.h"
-#define MAX_size  100 
 
-struct Stack {
-	int top;
-	int item[MAX_size];//fixed size array
-};
+
+struct Stack;
 //Function to initialize the stack
 
 
 struct Stack* stack_init() {
 	struct Stack* S = (struct Stack*)malloc(sizeof(struct Stack));
-    S->top = -1;
+        S->top = -1;
 	return S;
 }
 
