@@ -1,4 +1,3 @@
-
 #ifndef LIST_HPP_
 #define LIST_HPP_
 template<typename T>
@@ -11,7 +10,7 @@ struct List {
 	List<T>* add_front(List<T>* Head, T value);
 	List<T>* add_end(List<T>* Head, T value);
 	List<T> delete_atposition(List<T>* Head, T value);
+	List<T> insert_at_position(List<T>* Head, T value , int index);
 };
 
 #endif // !"LIST_HPP"
-
