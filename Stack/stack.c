@@ -1,12 +1,10 @@
-#include "stdio.h"
-#include "stdlib.h"
 #include "stack.h"
 
-struct Stack;
+// typedef struct Stack;
 
 // Function to initialize the stack
 
-struct Stack *stack_create(size_t stack_size)
+Stack *stack_create(size_t stack_size)
 {
 	Stack *S = (Stack *)malloc(sizeof(Stack));
 	if (!S)
@@ -24,32 +22,23 @@ struct Stack *stack_create(size_t stack_size)
 	return S;
 }
 
-// return true id stack is empty and false when not
-bool is_Empty(Stack *S)
-{
-	if (S->top == 0)
-	{				 // if the top = 0 means no value are inside the stack
-		return true; // return true if the stack is empty
-	}
-	else
-	{
-		return false; // return false when the stack is not empty
-	}
-}
-
 // function to know how much elements are inside the Stack
-int size_of_stack(Stack *S)
+
+size_t size_of_stack(Stack *S)
 {
 	return S->top;
+}
+// return true id stack is empty and false when not
+bool is_empty(Stack *S)
+{
+	return size_of_stack(S) == 0 ? true : false; // return true if the stack is empty
+												 // return false when the stack is not empty
 }
 
 // check if the Stack is full or not
 bool is_full(Stack *S)
 {
-	if (S->top == S->size)
-		return true;
-	else
-		return false;
+	return size_of_stack(S) == S->size ? true : false;
 }
 
 // Push new value into Stack
@@ -73,7 +62,7 @@ void stack_delete(Stack *S)
 // delete the last element
 bool stack_pop(Stack *S)
 {
-	if (is_Empty(S))
+	if (is_empty(S))
 	{ // when the stack is empty return 0 as default value
 		return false;
 	}
@@ -110,7 +99,7 @@ bool expand_stack(Stack *S)
 bool clear_stack(Stack *S)
 {
 
-	if (is_Empty)
+	if (is_empty(S))
 	{
 		return false; // the Stack is allready empty
 	}
@@ -127,4 +116,25 @@ bool clear_stack(Stack *S)
 		}
 		return true;
 	}
+}
+
+int get_item(Stack *S, unsigned int index)
+{
+
+	if (S == NULL || index <= size_of_stack(S))
+	{
+		return UINT_MAX; //  return -1 if the index is not valid or the Stack is NULL
+	}
+	return S->items[index];
+	// return the value the value if the index is valid.
+}
+
+unsigned remaining_size(Stack *S)
+{
+	return S == NULL ? UINT_MAX : S->size - size_of_stack(S);
+}
+
+int main()
+{
+	return 0;
 }
