@@ -26,28 +26,39 @@ Stack *stack_create(size_t stack_size)
 
 size_t size_of_stack(Stack *S)
 {
+	if (S == NULL)
+		return 0;
+
 	return S->top;
 }
 // return true id stack is empty and false when not
 bool is_empty(Stack *S)
 {
-	return size_of_stack(S) == 0 ? true : false; // return true if the stack is empty
-												 // return false when the stack is not empty
+	if (S == NULL || S->top == 0)
+	{
+		return true;
+	} // return true if the stack is empty or is null
+	return false; // return false when the stack is not empty
 }
 
 // check if the Stack is full or not
 bool is_full(Stack *S)
 {
-	return size_of_stack(S) == S->size ? true : false;
+	if (S == NULL || S->top != S->size)
+		return false;
+	return true;
 }
 
 // Push new value into Stack
 bool stack_push(Stack *S, int value)
 {
+	if (S == NULL)
+		return false; // check if the Stack is not NUll
+
 	if (S->top < S->size)
 	{			  // check if stack if full when not push the new value
 		S->top++; // increment the top
-		S->items[S->top] = value;
+		S->items[S->top - 1] = value;
 		return true;
 	}
 	return false;
@@ -55,25 +66,30 @@ bool stack_push(Stack *S, int value)
 // delete the stack from memory
 void stack_delete(Stack *S)
 {
-	free(S->items);
-	free(S);
+	if (S == NULL)
+	{
+		free(S->items);
+		free(S);
+	}
 }
 
 // delete the last element
-bool stack_pop(Stack *S)
+int stack_pop(Stack *S)
 {
-	if (is_empty(S))
+	if (S == NULL || is_empty(S))
 	{ // when the stack is empty return 0 as default value
-		return false;
+		return 0;
 	}
-	int element = S->items[S->top];
+	int element = S->items[S->top - 1];
 	S->top--;
-	return true;
+	return element;
 }
 
 // expand the Stack if it is  full
 bool expand_stack(Stack *S)
 {
+	if (S == NULL)
+		return false; // check first if the stack is not NULL
 	if (is_full(S))
 	{ // check if the stack is full
 		// if yes expand the size of stack
@@ -83,6 +99,7 @@ bool expand_stack(Stack *S)
 		if (temp)
 		{
 			S->items = temp;
+			S->size = S->size * 2;
 			return true; // return when Memory allocation for temp is successful
 		}
 		else
@@ -99,7 +116,7 @@ bool expand_stack(Stack *S)
 bool clear_stack(Stack *S)
 {
 
-	if (is_empty(S))
+	if (is_empty(S) || S == NULL)
 	{
 		return false; // the Stack is allready empty
 	}
@@ -114,18 +131,19 @@ bool clear_stack(Stack *S)
 			free(S);
 			return false;
 		}
+		S->top = 0;
 		return true;
 	}
 }
 
-int get_item(Stack *S, unsigned int index)
+int get_item(Stack *S, size_t index)
 {
 
 	if (S == NULL || index <= size_of_stack(S))
 	{
-		return UINT_MAX; //  return -1 if the index is not valid or the Stack is NULL
+		return -1; //  return NULL if the index is not valid or the Stack is NULL
 	}
-	return S->items[index];
+	return S->items[index - 1];
 	// return the value the value if the index is valid.
 }
 
@@ -133,4 +151,3 @@ unsigned remaining_size(Stack *S)
 {
 	return S == NULL ? UINT_MAX : S->size - size_of_stack(S);
 }
-
