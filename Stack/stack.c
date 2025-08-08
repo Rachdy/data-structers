@@ -134,7 +134,3 @@ unsigned remaining_size(Stack *S)
 	return S == NULL ? UINT_MAX : S->size - size_of_stack(S);
 }
 
-int main()
-{
-	return 0;
-}
